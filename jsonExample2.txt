@@ -1,8 +1,0 @@
-{
-    "properties": {
-        "price": {
-            "type": "number",
-            "minimum": 0,
-            "exclusiveMinimum": false
-        },
-}
