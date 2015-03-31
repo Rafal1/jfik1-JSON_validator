@@ -30,7 +30,7 @@ public class Lexer {
                         chainFlag = true;
                         Token t = Main.tokens.get(TokenEnum.ZNAK_NAPISU);
                         t.row = lineCounter;
-                        t.column = i;
+                        t.column = (i + 1);
                         gatheredTokens.add(t);
                     } else {
                         if (!tokenBuffor.equals("")) {
@@ -39,17 +39,17 @@ public class Lexer {
                             if (m.matches()) {
                                 Token t = Main.tokens.get(TokenEnum.ZNAKI);
                                 t.row = lineCounter;
-                                t.column = i;
+                                t.column = i + 1;
                                 gatheredTokens.add(t);
                                 tokenBuffor = "";
                             } else {
-                                System.out.println("NAPIS Error token is inappropriate character: " + c + " in line " + lineCounter + " and column " + i + ".");
+                                System.out.println("NAPIS Error token is inappropriate character: " + c + " in line " + lineCounter + " and column " + (i + 1) + ".");
                                 tokenBuffor = "";
                             }
                         }
                         Token t = Main.tokens.get(TokenEnum.ZNAK_NAPISU);
                         t.row = lineCounter;
-                        t.column = i;
+                        t.column = i + 1;
                         gatheredTokens.add(t);
                         chainFlag = false;
                     }
@@ -61,7 +61,7 @@ public class Lexer {
                     if (tokenBuffor.equals("true")) {
                         Token t = Main.tokens.get(TokenEnum.TRUE);
                         t.row = lineCounter;
-                        t.column = i;
+                        t.column = i + 1;
                         gatheredTokens.add(t);
                         tokenBuffor = "";
                         continue;
@@ -70,7 +70,7 @@ public class Lexer {
                     if (tokenBuffor.equals("false")) {
                         Token t = Main.tokens.get(TokenEnum.FALSE);
                         t.row = lineCounter;
-                        t.column = i;
+                        t.column = i + 1;
                         gatheredTokens.add(t);
                         tokenBuffor = "";
                         continue;
@@ -79,7 +79,7 @@ public class Lexer {
                     if (tokenBuffor.equals("null")) {
                         Token t = Main.tokens.get(TokenEnum.NULL);
                         t.row = lineCounter;
-                        t.column = i;
+                        t.column = i + 1;
                         gatheredTokens.add(t);
                         tokenBuffor = "";
                         continue;
@@ -97,7 +97,7 @@ public class Lexer {
                             if (tmpM.matches()) {
                                 Token t = Main.tokens.get(TokenEnum.NUMER);
                                 t.row = lineCounter;
-                                t.column = i;
+                                t.column = i + 1;
                                 gatheredTokens.add(t);
                                 tokenBuffor = "";
                             }
@@ -112,7 +112,7 @@ public class Lexer {
                 if (c.equals(new Character('{'))) {
                     Token t = Main.tokens.get(TokenEnum.POCZATEK_OBIEKTU);
                     t.row = lineCounter;
-                    t.column = i;
+                    t.column = i + 1;
                     gatheredTokens.add(t);
                     tokenBuffor = "";
                     continue;
@@ -121,7 +121,7 @@ public class Lexer {
                 if (c.equals(new Character('}'))) {
                     Token t = Main.tokens.get(TokenEnum.KONIEC_OBIEKTU);
                     t.row = lineCounter;
-                    t.column = i;
+                    t.column = i + 1;
                     gatheredTokens.add(t);
                     tokenBuffor = "";
                     continue;
@@ -130,7 +130,7 @@ public class Lexer {
                 if (c.equals(new Character('['))) {
                     Token t = Main.tokens.get(TokenEnum.POCZATEK_TABLICY);
                     t.row = lineCounter;
-                    t.column = i;
+                    t.column = i + 1;
                     gatheredTokens.add(t);
                     tokenBuffor = "";
                     continue;
@@ -139,7 +139,7 @@ public class Lexer {
                 if (c.equals(new Character(']'))) {
                     Token t = Main.tokens.get(TokenEnum.KONIEC_TABLICY);
                     t.row = lineCounter;
-                    t.column = i;
+                    t.column = i + 1;
                     gatheredTokens.add(t);
                     tokenBuffor = "";
                     continue;
@@ -148,7 +148,7 @@ public class Lexer {
                 if (c.equals(new Character(':'))) {
                     Token t = Main.tokens.get(TokenEnum.SEPARATOR_WARTOSCI);
                     t.row = lineCounter;
-                    t.column = i;
+                    t.column = i + 1;
                     gatheredTokens.add(t);
                     tokenBuffor = "";
                     continue;
@@ -157,7 +157,7 @@ public class Lexer {
                 if (c.equals(new Character(','))) {
                     Token t = Main.tokens.get(TokenEnum.SEPARATOR_REKORDOW);
                     t.row = lineCounter;
-                    t.column = i;
+                    t.column = i + 1;
                     gatheredTokens.add(t);
                     tokenBuffor = "";
                     continue;

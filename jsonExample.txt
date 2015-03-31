@@ -1,8 +1,4 @@
 {
-    "properties": {
-        "price": {
-            "type": "number",
-            "minimum": 0,
-            "exclusiveMinimum": false
-        },
-}
+     "required": ["id", "name", "price"],
+     "required": null
+ }

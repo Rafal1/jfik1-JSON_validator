@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 public class Main {
-    //    public static ArrayList<Token> tokens;
     public static HashMap<TokenEnum, Token> tokens;
     public static LinkedList<Token> gatheredTokens;
 
@@ -14,7 +13,7 @@ public class Main {
         createTokens();
         BufferedReader bReader;
         try {
-            bReader = new BufferedReader(new FileReader("jsonExample.txt"));
+            bReader = new BufferedReader(new FileReader("jsonExample1.txt"));
             Lexer lx = new Lexer();
             gatheredTokens = lx.start(bReader);
         } catch (FileNotFoundException e) {
@@ -27,7 +26,6 @@ public class Main {
     }
 
     public static void createTokens() {
-//        tokens = new ArrayList<Token>();
         tokens = new HashMap<TokenEnum, Token>();
 
         Token t = new Token(TokenEnum.TRUE, "true");
