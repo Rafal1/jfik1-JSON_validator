@@ -1,0 +1,7 @@
+{
+        "price": {
+            "type": "number"
+            "minimum": true,
+            "exclusiveMinimum": false
+        }
+}

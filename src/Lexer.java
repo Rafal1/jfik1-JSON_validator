@@ -16,6 +16,7 @@ public class Lexer {
         String tokenBuffor = "";
         Boolean chainFlag = false;
         Integer lineCounter = 0;
+        Integer tmpStringLocation = null;
         while ((lineConstant = bReader.readLine()) != null) {
             lineCounter++;
             char[] charsOfLine = lineConstant.toCharArray();
@@ -28,18 +29,20 @@ public class Lexer {
                 if (c.equals('\"')) {
                     if (!chainFlag) {
                         chainFlag = true;
-                        Token t = Main.tokens.get(TokenEnum.ZNAK_NAPISU);
+                        Token t = new Token(TokenEnum.ZNAK_NAPISU, Main.tokens.get(TokenEnum.ZNAK_NAPISU));
                         t.row = lineCounter;
-                        t.column = (i + 1);
+                        t.column = i + 1;
+                        tmpStringLocation = i + 2;
                         gatheredTokens.add(t);
                     } else {
                         if (!tokenBuffor.equals("")) {
-                            Pattern p = Pattern.compile(".*");
+                            Pattern p = Pattern.compile(Main.tokens.get(TokenEnum.ZNAKI));
                             Matcher m = p.matcher(tokenBuffor);
                             if (m.matches()) {
-                                Token t = Main.tokens.get(TokenEnum.ZNAKI);
+                                Token t = new Token(TokenEnum.ZNAKI, Main.tokens.get(TokenEnum.ZNAKI));
                                 t.row = lineCounter;
-                                t.column = i + 1;
+                                t.column = tmpStringLocation;
+                                tmpStringLocation = null;
                                 gatheredTokens.add(t);
                                 tokenBuffor = "";
                             } else {
@@ -47,7 +50,7 @@ public class Lexer {
                                 tokenBuffor = "";
                             }
                         }
-                        Token t = Main.tokens.get(TokenEnum.ZNAK_NAPISU);
+                        Token t = new Token(TokenEnum.ZNAK_NAPISU, Main.tokens.get(TokenEnum.ZNAK_NAPISU));
                         t.row = lineCounter;
                         t.column = i + 1;
                         gatheredTokens.add(t);
@@ -59,27 +62,27 @@ public class Lexer {
 
                 if (!chainFlag) {
                     if (tokenBuffor.equals("true")) {
-                        Token t = Main.tokens.get(TokenEnum.TRUE);
+                        Token t = new Token(TokenEnum.TRUE, Main.tokens.get(TokenEnum.TRUE));
                         t.row = lineCounter;
-                        t.column = i + 1;
+                        t.column = i - 2;
                         gatheredTokens.add(t);
                         tokenBuffor = "";
                         continue;
                     }
 
                     if (tokenBuffor.equals("false")) {
-                        Token t = Main.tokens.get(TokenEnum.FALSE);
+                        Token t = new Token(TokenEnum.FALSE, Main.tokens.get(TokenEnum.FALSE));
                         t.row = lineCounter;
-                        t.column = i + 1;
+                        t.column = i - 3;
                         gatheredTokens.add(t);
                         tokenBuffor = "";
                         continue;
                     }
 
                     if (tokenBuffor.equals("null")) {
-                        Token t = Main.tokens.get(TokenEnum.NULL);
+                        Token t = new Token(TokenEnum.NULL, Main.tokens.get(TokenEnum.NULL));
                         t.row = lineCounter;
-                        t.column = i + 1;
+                        t.column = i - 2;
                         gatheredTokens.add(t);
                         tokenBuffor = "";
                         continue;
@@ -88,6 +91,13 @@ public class Lexer {
                     Pattern p = Pattern.compile("^[\\-\\.0-9]+$");
                     Matcher m = p.matcher(tokenBuffor);
                     if (m.matches()) {
+                        if(i.equals(charsOfLine.length - 1)) {
+                            Token t = new Token(TokenEnum.NUMER, Main.tokens.get(TokenEnum.NUMER));
+                            t.row = lineCounter;
+                            t.column = i - (tokenBuffor.length() - 1);
+                            gatheredTokens.add(t);
+                            tokenBuffor = "";
+                        }
                         continue;
                     } else {
                         if (!(tokenBuffor.length() == 1 | tokenBuffor.length() == 0)) {
@@ -95,14 +105,15 @@ public class Lexer {
                             tmpTokenBuffor = tokenBuffor.substring(0, tokenBuffor.length() - 1);
                             Matcher tmpM = p.matcher(tmpTokenBuffor);
                             if (tmpM.matches()) {
-                                Token t = Main.tokens.get(TokenEnum.NUMER);
+                                Token t = new Token(TokenEnum.NUMER, Main.tokens.get(TokenEnum.NUMER));
                                 t.row = lineCounter;
-                                t.column = i + 1;
+                                t.column = i - (tokenBuffor.length() - 1);
                                 gatheredTokens.add(t);
                                 tokenBuffor = "";
                             }
                         }
                     }
+
                 }
 
                 if (tokenBuffor.length() > lengthFieldLimit) {
@@ -110,7 +121,7 @@ public class Lexer {
                 }
 
                 if (c.equals(new Character('{'))) {
-                    Token t = Main.tokens.get(TokenEnum.POCZATEK_OBIEKTU);
+                    Token t = new Token(TokenEnum.POCZATEK_OBIEKTU, Main.tokens.get(TokenEnum.POCZATEK_OBIEKTU));
                     t.row = lineCounter;
                     t.column = i + 1;
                     gatheredTokens.add(t);
@@ -119,7 +130,7 @@ public class Lexer {
                 }
 
                 if (c.equals(new Character('}'))) {
-                    Token t = Main.tokens.get(TokenEnum.KONIEC_OBIEKTU);
+                    Token t = new Token(TokenEnum.KONIEC_OBIEKTU, Main.tokens.get(TokenEnum.KONIEC_OBIEKTU));
                     t.row = lineCounter;
                     t.column = i + 1;
                     gatheredTokens.add(t);
@@ -128,7 +139,7 @@ public class Lexer {
                 }
 
                 if (c.equals(new Character('['))) {
-                    Token t = Main.tokens.get(TokenEnum.POCZATEK_TABLICY);
+                    Token t = new Token(TokenEnum.POCZATEK_TABLICY, Main.tokens.get(TokenEnum.POCZATEK_TABLICY));
                     t.row = lineCounter;
                     t.column = i + 1;
                     gatheredTokens.add(t);
@@ -137,7 +148,7 @@ public class Lexer {
                 }
 
                 if (c.equals(new Character(']'))) {
-                    Token t = Main.tokens.get(TokenEnum.KONIEC_TABLICY);
+                    Token t = new Token(TokenEnum.KONIEC_TABLICY, Main.tokens.get(TokenEnum.KONIEC_TABLICY));
                     t.row = lineCounter;
                     t.column = i + 1;
                     gatheredTokens.add(t);
@@ -146,7 +157,7 @@ public class Lexer {
                 }
 
                 if (c.equals(new Character(':'))) {
-                    Token t = Main.tokens.get(TokenEnum.SEPARATOR_WARTOSCI);
+                    Token t = new Token(TokenEnum.SEPARATOR_WARTOSCI, Main.tokens.get(TokenEnum.SEPARATOR_WARTOSCI));
                     t.row = lineCounter;
                     t.column = i + 1;
                     gatheredTokens.add(t);
@@ -155,25 +166,35 @@ public class Lexer {
                 }
 
                 if (c.equals(new Character(','))) {
-                    Token t = Main.tokens.get(TokenEnum.SEPARATOR_REKORDOW);
+                    Token t = new Token(TokenEnum.SEPARATOR_REKORDOW, Main.tokens.get(TokenEnum.SEPARATOR_REKORDOW));
                     t.row = lineCounter;
                     t.column = i + 1;
                     gatheredTokens.add(t);
                     tokenBuffor = "";
                     continue;
                 }
+
+                if(!chainFlag) {
+                    Pattern pp = Pattern.compile("[nulfasetr]");
+                    Matcher tmpM = pp.matcher(c.toString());
+                    if (!tmpM.matches()) {
+                        System.out.println("Wrong sing " + c + " in line: " + lineCounter + " and column: " + (i + 1));
+                        System.exit(0);
+                    }
+                }
+
             }
 
         }
         return gatheredTokens;
     }
 
-    public static Integer getLengthFieldLimit() {
-        return lengthFieldLimit;
-    }
-
-    public static void setLengthFieldLimit(Integer lengthFieldLimit) {
-        Lexer.lengthFieldLimit = lengthFieldLimit;
-    }
+//    public static Integer getLengthFieldLimit() {
+//        return lengthFieldLimit;
+//    }
+//
+//    public static void setLengthFieldLimit(Integer lengthFieldLimit) {
+//        Lexer.lengthFieldLimit = lengthFieldLimit;
+//    }
 
 }

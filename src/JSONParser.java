@@ -27,27 +27,28 @@ public class JSONParser {
         return false;
     }
 
-    private static Boolean getPreviousToken() {
-        if (it.hasPrevious()) {
-            currentToken = it.previous();
-            return true;
-        }
-        return false;
-    }
+//    private static Boolean getPreviousToken() {
+//        if (it.hasPrevious()) {
+//            currentToken = it.previous();
+//            return true;
+//        }
+//        return false;
+//    }
 
-    private static void err(TokenEnum[] expected, String METODA) {
-        System.out.println(METODA + " Unexpected token: " + currentToken.name.name() + " in line " + currentToken.row + " and column "
+    private static void err(TokenEnum[] expected, String method) {
+        System.out.println(method + " Unexpected token: " + currentToken.name.name() + " in line " + currentToken.row + " and column "
                 + currentToken.column + ". We expect: ");
         if (expected != null) {
             System.out.println("[");
             for (TokenEnum tn : expected) {
-                Token t = Main.tokens.get(tn);
-                System.out.println(t.name.name() + "(" + t.value + ")");
+                String tValue = Main.tokens.get(tn);
+                System.out.println(tn.name() + "(" + tValue + ")");
             }
             System.out.println("]");
         } else {
             System.out.println("End of input file.");
         }
+        System.exit(0);
     }
 
     public static void start() {
@@ -116,14 +117,15 @@ public class JSONParser {
                 if (currentToken.name.equals(TokenEnum.SEPARATOR_REKORDOW)) {
                     getNextToken();
                     trescObiektu();
-                } else if (!currentToken.name.equals(TokenEnum.KONIEC_OBIEKTU)) {
+                }
+                if (!currentToken.name.equals(TokenEnum.KONIEC_OBIEKTU)) {
                     TokenEnum[] te = {TokenEnum.KONIEC_OBIEKTU};
                     err(te, "trescObiektu");
                 }
                 break;
             default:
                 TokenEnum[] te = {TokenEnum.ZNAK_NAPISU};
-                err(te, "trescObiektu1");
+                err(te, "trescObiektu");
         }
     }
 
@@ -230,6 +232,4 @@ public class JSONParser {
                 err(te, "napis");
         }
     }
-
-
 }
