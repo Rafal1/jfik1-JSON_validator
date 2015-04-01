@@ -27,16 +27,8 @@ public class JSONParser {
         return false;
     }
 
-//    private static Boolean getPreviousToken() {
-//        if (it.hasPrevious()) {
-//            currentToken = it.previous();
-//            return true;
-//        }
-//        return false;
-//    }
-
     private static void err(TokenEnum[] expected, String method) {
-        System.out.println(method + " Unexpected token: " + currentToken.name.name() + " in line " + currentToken.row + " and column "
+        System.out.println("[" + method + "]" + " Unexpected token: " + currentToken.name.name() + " in line " + currentToken.row + " and column "
                 + currentToken.column + ". We expect: ");
         if (expected != null) {
             System.out.println("[");
@@ -174,7 +166,7 @@ public class JSONParser {
             getNextToken();
             elementy();
         } else {
-            TokenEnum[] te = {TokenEnum.SEPARATOR_REKORDOW};
+            TokenEnum[] te = {TokenEnum.SEPARATOR_REKORDOW, TokenEnum.KONIEC_TABLICY};
             err(te, "elementy");
         }
 

@@ -13,7 +13,7 @@ public class Main {
         createTokens();
         BufferedReader bReader;
         try {
-            bReader = new BufferedReader(new FileReader("jsonExample3.txt"));
+            bReader = new BufferedReader(new FileReader("jsonExample1.txt"));
             Lexer lx = new Lexer();
             gatheredTokens = lx.start(bReader);
         } catch (FileNotFoundException e) {

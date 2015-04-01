@@ -91,7 +91,7 @@ public class Lexer {
                     Pattern p = Pattern.compile("^[\\-\\.0-9]+$");
                     Matcher m = p.matcher(tokenBuffor);
                     if (m.matches()) {
-                        if(i.equals(charsOfLine.length - 1)) {
+                        if (i.equals(charsOfLine.length - 1)) {
                             Token t = new Token(TokenEnum.NUMER, Main.tokens.get(TokenEnum.NUMER));
                             t.row = lineCounter;
                             t.column = i - (tokenBuffor.length() - 1);
@@ -174,11 +174,11 @@ public class Lexer {
                     continue;
                 }
 
-                if(!chainFlag) {
+                if (!chainFlag) {
                     Pattern pp = Pattern.compile("[nulfasetr]");
                     Matcher tmpM = pp.matcher(c.toString());
                     if (!tmpM.matches()) {
-                        System.out.println("Wrong sing " + c + " in line: " + lineCounter + " and column: " + (i + 1));
+                        System.out.println("Wrong sign " + c + " in line: " + lineCounter + " and column: " + (i + 1));
                         System.exit(0);
                     }
                 }
@@ -188,13 +188,4 @@ public class Lexer {
         }
         return gatheredTokens;
     }
-
-//    public static Integer getLengthFieldLimit() {
-//        return lengthFieldLimit;
-//    }
-//
-//    public static void setLengthFieldLimit(Integer lengthFieldLimit) {
-//        Lexer.lengthFieldLimit = lengthFieldLimit;
-//    }
-
 }
