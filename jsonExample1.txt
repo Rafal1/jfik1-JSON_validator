@@ -1,4 +1,4 @@
-{ 
+{
     "title": "Product",
     "description": "A product from Acme's catalog",
     "type": "object",
@@ -13,7 +13,7 @@
         },
         "price": {
             "type": "number",
-            "minimum": 0,
+            "minimum": 1.9,
             "exclusiveMinimum": true
         },
         "tags": {

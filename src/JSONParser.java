@@ -195,7 +195,7 @@ public class JSONParser {
                 return true;
             case POCZATEK_TABLICY:
                 tablica();
-                return true; //todo ensure its true
+                return true;
             default:
                 err(te, "wartosc");
                 return false;
